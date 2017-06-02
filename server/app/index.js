@@ -2,7 +2,7 @@
 // var secrets = requier('../../secrets.json')
 var app = require('express')();
 var path = require('path');
-var session = require('express-session'); // I am the library that makes the cookie for you and automatically creates a session store in RAM
+var session = require('express-session');
 
 // "Enhancing" middleware (does not send response, server-side effects only)
 
@@ -14,7 +14,7 @@ app.use(session({
   secret: process.env.EXPRESS_SECRET,
   resave: false,
   saveUninitialized: false
-})); // req.session - read your cookie!
+}));
 
 app.use(require('./passport.middleware'));
 

@@ -1,5 +1,5 @@
 'use strict';
-require('./secrets.js');
+
 var chance = require('chance')(123);
 var toonAvatar = require('cartoon-avatar');
 var Promise = require('bluebird');
