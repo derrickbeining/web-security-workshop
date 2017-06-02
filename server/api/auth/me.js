@@ -17,9 +17,13 @@ router.get('/', function (req, res, next) {
 
 // signup, i.e. "let `me` introduce myself"
 router.post('/', function (req, res, next) {
-  delete req.body.isAdmin;
   User.findOrCreate({
-    where: req.body
+    where: {
+      email: req.body.email
+    },
+    defaults: { // if the user doesn't exist, create including this info
+      password: req.body.password
+    }
   })
   .spread((user, created) => {
     if (created) {
@@ -40,15 +44,10 @@ router.post('/', function (req, res, next) {
 // login, i.e. "you remember `me`, right?"
 router.put('/', function (req, res, next) {
   User.findOne({
-    where: {
-      email: req.body.email + ''
-    },
-    atrributes: {
-      include: ['password', 'salt']
-    }
+    where: req.body // email and password
   })
   .then(user => {
-    if (!user || !user.isValidPassword(req.body.password + '')) {
+    if (!user) {
       res.sendStatus(401); // no message; good practice to omit why auth fails
     } else {
       // with Passport:
