@@ -4,7 +4,8 @@ var router = require('express').Router();
 
 var HttpError = require('../../utils/HttpError');
 var Story = require('./story.model');
-var User = require('../users/user.model')
+var User = require('../users/user.model');
+const gatekeeper = require('../../utils/gatekeeper');
 
 router.param('id', function (req, res, next, id) {
   Story.findById(id)
@@ -27,7 +28,7 @@ router.get('/', function (req, res, next) {
   .catch(next);
 });
 
-router.post('/', function (req, res, next) {
+router.post('/', gatekeeper.assertAdminOrAuthor, function (req, res, next) {
   Story.create(req.body)
   .then(function (story) {
     return story.reload(Story.options.scopes.populated());
@@ -46,7 +47,7 @@ router.get('/:id', function (req, res, next) {
   .catch(next);
 });
 
-router.put('/:id', function (req, res, next) {
+router.put('/:id', gatekeeper.assertAdminOrAuthor, function (req, res, next) {
   req.story.update(req.body)
   .then(function (story) {
     return story.reload(Story.options.scopes.populated());
@@ -57,7 +58,7 @@ router.put('/:id', function (req, res, next) {
   .catch(next);
 });
 
-router.delete('/:id', function (req, res, next) {
+router.delete('/:id', gatekeeper.assertAdminOrAuthor, function (req, res, next) {
   req.story.destroy()
   .then(function () {
     res.status(204).end();

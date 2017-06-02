@@ -22,13 +22,14 @@ passport.use(
       defaults: info
     })
     .spread(function (user) {
-      done(null, user);
+      // done(error, success)
+      done(null, user); // what do I call? -- serializeUser
     })
     .catch(done);
   })
 );
 
-// Google authentication and login
+// Google authentication and login -- when I clicked the login with Google button
 router.get('/', passport.authenticate('google', { scope: 'email' }));
 
 // handle the callback after Google has authenticated the user
