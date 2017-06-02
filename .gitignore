@@ -1,5 +1,7 @@
 # SHHHHHHH
 secrets.js
+cert.pem
+key.pem
 
 # project-specific folders and files
 build/
