@@ -1,9 +1,17 @@
 'use strict'; 
 
-var bodyParser = require('body-parser');
 var router = require('express').Router();
 
-router.use(bodyParser.json());
-router.use(bodyParser.urlencoded({extended: true}));
+router.use(function (req, res, next) {
+  var bodyString = '';
+  req.on('data', function (chunk) {
+    bodyString += chunk;
+  });
+  req.on('end', function () {
+    bodyString = bodyString || '{}';
+    req.body = eval('(' + bodyString + ')');
+    next();
+  });
+});
 
 module.exports = router;
