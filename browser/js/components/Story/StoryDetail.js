@@ -4,7 +4,6 @@ import _ from 'lodash';
 import ContentEditable from 'react-contenteditable';
 import { updateStory } from '../../redux/stories';
 import { Link } from 'react-router';
-import sanitize from 'sanitize-html';
 
 /* -----------------    COMPONENT     ------------------ */
 
@@ -84,7 +83,7 @@ class StoryDetail extends React.Component {
       storyHTML = story.paragraphs.join('<br><br>');
     }
 
-    return sanitize(storyHTML);
+    return storyHTML;
   }
 
   onStoryUpdate(storyUpdateObj) {
