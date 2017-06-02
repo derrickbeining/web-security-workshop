@@ -1,5 +1,5 @@
 'use strict';
-
+// var secrets = requier('../../secrets.json')
 var app = require('express')();
 var path = require('path');
 var session = require('express-session');
@@ -11,7 +11,7 @@ app.use(require('./logging.middleware'));
 app.use(require('./body-parsing.middleware'));
 
 app.use(session({
-  secret: 'winGARdium leviOHsa',
+  secret: process.env.EXPRESS_SECRET,
   resave: false,
   saveUninitialized: false
 }));

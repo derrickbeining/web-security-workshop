@@ -2,7 +2,7 @@
 
 var Sequelize = require('sequelize');
 
-var databaseURI = 'postgres://localhost:5432/auther';
+var databaseURI = process.env.DB_SECRET;
 
 var db = new Sequelize(databaseURI, {
   define: {
