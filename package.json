@@ -7,8 +7,7 @@
     "start": "webpack && node server",
     "start-dev": "webpack -w & nodemon --watch server -e js,html server/index.js",
     "seed": "node seed",
-    "db-init": "pg-init auther",
-    "postinstall": "npm run db-init"
+    "db-init": "pg-init auther"
   },
   "author": "",
   "license": "ISC",
