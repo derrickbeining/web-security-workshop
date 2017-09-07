@@ -4,7 +4,8 @@
   "description": "",
   "main": "server/index.js",
   "scripts": {
-    "start": "webpack -w & nodemon --watch server -e js,html server/index.js",
+    "start": "webpack && node server",
+    "start-dev": "webpack -w & nodemon --watch server -e js,html server/index.js",
     "seed": "node seed",
     "db-init": "pg-init auther",
     "postinstall": "npm run db-init"
