@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const User = require('../users/user.model');
+const crypto = require('crypto')
 // const HttpError = require('../../utils/HttpError');
 
 // This marries the original auth code we wrote to Passport.
@@ -25,42 +26,44 @@ router.post('/', function (req, res, next) {
       password: req.body.password
     }
   })
-  .spread((user, created) => {
-    if (created) {
-      // with Passport:
-      req.logIn(user, function (err) {
-        if (err) return next(err);
-        res.json(user);
-      });
-      // // before, without Passport:
-      // req.session.userId = user.id;
-      // res.json(user);
-    } else {
-      res.sendStatus(401); // this user already exists, you cannot sign up
-    }
-  });
+    .spread((user, created) => {
+      if (created) {
+        // with Passport:
+        req.logIn(user, function (err) {
+          if (err) return next(err);
+          res.json(user);
+        });
+        // // before, without Passport:
+        // req.session.userId = user.id;
+        // res.json(user);
+      } else {
+        res.sendStatus(401); // this user already exists, you cannot sign up
+      }
+    });
 });
 
 // login, i.e. "you remember `me`, right?"
 router.put('/', function (req, res, next) {
   User.findOne({
-    where: req.body // email and password
+    where: {email: req.body.email} // email and password
   })
-  .then(user => {
-    if (!user) {
-      res.sendStatus(401); // no message; good practice to omit why auth fails
-    } else {
-      // with Passport:
-      req.logIn(user, function (err) {
-        if (err) return next(err);
-        res.json(user);
-      });
-      // // before, without Passport:
-      // req.session.userId = user.id;
-      // res.json(user);
-    }
-  })
-  .catch(next);
+    .then(user => {
+      if (!user.id) {
+        res.sendStatus(404); // no message; good practice to omit why auth fails
+      } else if (user.isPasswordAuthenticated(req.body.password)) {
+        // with Passport:
+        req.logIn(user, function (err) {
+          if (err) return next(err);
+          res.json(user);
+        });
+        // // before, without Passport:
+        // req.session.userId = user.id;
+        // res.json(user);
+      } else {
+        res.sendStatus(401)
+      }
+    })
+    .catch(next);
 });
 
 // logout, i.e. "please just forget `me`"
