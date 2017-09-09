@@ -15,7 +15,7 @@ passport.use(
       var info = {
         name: profile.displayName,
         email: profile.emails[ 0 ].value,
-        photo: profile.photos ? profile.photos[ 0 ].value : undefined
+        photo: profile.photos ? profile.photos[ 0 ].value : undefined,
       };
       User.findOrCreate({
         where: {googleId: profile.id},

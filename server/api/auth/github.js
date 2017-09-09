@@ -15,7 +15,7 @@ passport.use(new GitHubStrategy({
   var info = {
     name: profile.displayName,
     email: email,
-    photo: photo
+    photo: photo,
   };
   User.findOrCreate({
     where: {githubId: profile.id},

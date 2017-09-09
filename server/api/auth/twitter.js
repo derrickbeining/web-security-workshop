@@ -15,7 +15,7 @@ passport.use(new TwitterStrategy({
   var info = {
     name: profile.displayName,
     email: email,
-    photo: photo
+    photo: photo,
   };
   User.findOrCreate({
     where: {twitterId: profile.id},

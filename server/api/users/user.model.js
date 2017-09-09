@@ -20,7 +20,13 @@ var User = db.define('user', {
   },
   password: {
     type: Sequelize.STRING,
-    allowNull: false,
+    validate: {
+      hasLocalAuthOrOAuth () {
+        if (!(this.password || this.googleId || this.twitterId || this.githubId)) {
+          throw new Error('Password cannot be null if OAuth not enabled')
+        }
+      }
+    },
     set (userPassword) {
       this.setDataValue('password', hashSaltAndPassword(this.salt, userPassword))
     }

@@ -8,7 +8,7 @@ router.use(HttpError(404).middleware());
 
 router.use(function (err, req, res, next) {
   err.status = err.status || 500;
-  console.error(err.stack);
+  console.log('ERROR: ', err.message, '\n', err.stack);
   var html = [
     '<html><body>',
     '<p>ERROR: ', err.status, ' - ', err.message, '</p>',
