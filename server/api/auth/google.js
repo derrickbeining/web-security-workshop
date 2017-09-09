@@ -7,9 +7,9 @@ const User = require('../users/user.model');
 // configuring the strategy (credentials + verification callback)
 passport.use(
   new GoogleStrategy({
-    clientID: '199314976273-k9n2m1aftduffajj8lud6u34olccj948.apps.googleusercontent.com',
-    clientSecret: 'OzHNvOZg4Ng3dKp6WJejl3iY',
-    callbackURL: '/api/auth/google/verify'
+    clientID: process.env.oauth.google.clientID,
+    clientSecret: process.env.oauth.google.clientSecret,
+    callbackURL: process.env.oauth.google.callbackURL
   },
     function (token, refreshToken, profile, done) {
       var info = {

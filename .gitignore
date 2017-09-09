@@ -25,6 +25,9 @@ Thumbs.db
 .idea
 .vscode
 
-# repos / submodules
+# repos / submodulesf
 .git
 .svn
+
+# sensitive data / secrets
+.secrets.*
