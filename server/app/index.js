@@ -11,7 +11,7 @@ app.use(require('./logging.middleware'));
 app.use(require('./body-parsing.middleware'));
 
 app.use(session({
-  secret: 'winGARdium leviOHsa',
+  secret: process.env.EXPRESS_SESSION_SECRET,
   resave: false,
   saveUninitialized: false
 }));
@@ -34,7 +34,7 @@ app.use(require('./passport.middleware'));
 
 app.use('/api', require('../api/api.router'));
 
-var validFrontendRoutes = ['/', '/stories', '/users', '/stories/:id', '/users/:id', '/signup', '/login'];
+var validFrontendRoutes = [ '/', '/stories', '/users', '/stories/:id', '/users/:id', '/signup', '/login' ];
 var indexPath = path.join(__dirname, '..', '..', 'browser', 'index.html');
 validFrontendRoutes.forEach(function (stateRoute) {
   app.get(stateRoute, function (req, res) {

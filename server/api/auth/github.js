@@ -5,9 +5,9 @@ const GitHubStrategy = require('passport-github').Strategy;
 const User = require('../users/user.model');
 
 passport.use(new GitHubStrategy({
-  clientID: process.env.oauth.github.clientID,
-  clientSecret: process.env.oauth.github.clientSecret,
-  callbackURL: process.env.oauth.github.callbackURL
+  clientID: process.env.OAUTH.GITHUB.CLIENTID,
+  clientSecret: process.env.OAUTH.GITHUB.CLIENTSECRET,
+  callbackURL: process.env.OAUTH.GITHUB.CALLBACKURL
 }, function (token, refreshToken, profile, done) {
   // github may not provide an email, if so we'll just fake it
   var email = profile.emails ? profile.emails[ 0 ].value : [ profile.username, 'fake-auther-email.com' ].join('@');
